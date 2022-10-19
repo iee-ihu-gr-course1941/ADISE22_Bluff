@@ -1,2 +1,2 @@
-# ADISE22_Pinochle-
+# ADISE22_Pinochle
 Development of the famous card game "Pinochle"
