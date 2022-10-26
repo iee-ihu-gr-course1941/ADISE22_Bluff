@@ -1,6 +1,7 @@
 Welcome to our Bluff game! 
 
 <?php
+
 echo "this line is from php...";
 $sql= "select * from CARDS";
 $st= $mysqli->prepare($sql);

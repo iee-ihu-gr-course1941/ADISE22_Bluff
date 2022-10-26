@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.25-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: Bluff
+-- Host: localhost    Database: bluff
 -- ------------------------------------------------------
 -- Server version	10.4.25-MariaDB
 
@@ -164,7 +164,7 @@ LOCK TABLES `users` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'Bluff'
+-- Dumping routines for database 'bluff'
 --
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
@@ -290,4 +290,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-26 17:43:14
+-- Dump completed on 2022-10-26 17:19:33
