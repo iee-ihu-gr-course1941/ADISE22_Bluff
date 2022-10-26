@@ -1,7 +1,7 @@
 <?php
 
 if(gethostname()=='users.iee.ihu.gr') {
-	$mysqli=new mysqli('localhost','root','Fuegozz1!','Bluff',null,'/home/student/it/2017/it174988/mysql/run/mysql.sock');
+	$mysqli=new mysqli('localhost','root','//BALE KODIKO KAI KRIPSTON//','Bluff',null,'/home/student/it/2017/it174988/mysql/run/mysql.sock');
 	echo "server side";	
 }
 else {
