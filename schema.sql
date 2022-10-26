@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `board`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `board` (
-  `ID` int(11) DEFAULT NULL,
+  `BOARD_CARDS_ID` int(11) DEFAULT NULL,
   `card_text` varchar(50) DEFAULT NULL,
   `card_symbol` varchar(50) DEFAULT NULL,
-  KEY `FK_BOARD_CARDS` (`ID`) USING BTREE,
-  CONSTRAINT `FK_BOARD_CARDS` FOREIGN KEY (`ID`) REFERENCES `cards` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_BOARD_CARDS` (`BOARD_CARDS_ID`) USING BTREE,
+  CONSTRAINT `FK_BOARD_CARDS` FOREIGN KEY (`BOARD_CARDS_ID`) REFERENCES `cards` (`CARDS_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,10 +48,10 @@ DROP TABLE IF EXISTS `cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cards` (
-  `ID` int(11) NOT NULL,
+  `CARDS_ID` int(11) NOT NULL,
   `card_text` varchar(50) DEFAULT NULL,
   `card_symbol` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE
+  PRIMARY KEY (`CARDS_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,7 +61,7 @@ CREATE TABLE `cards` (
 
 LOCK TABLES `cards` WRITE;
 /*!40000 ALTER TABLE `cards` DISABLE KEYS */;
-INSERT INTO `cards` VALUES (0,NULL,NULL),(2,'2','hearts'),(3,'3','hearts'),(4,'4','hearts'),(5,'5','hearts'),(6,'6','hearts'),(7,'7','hearts'),(8,'8','hearts'),(9,'9','hearts'),(10,'10','hearts'),(11,'J','hearts'),(12,'Q','hearts'),(13,'K','hearts'),(14,'A','spades'),(15,'2','spades'),(16,'3','spades'),(17,'4','spades'),(18,'5','spades'),(19,'6','spades'),(20,'7','spades'),(21,'8','spades'),(22,'9','spades'),(23,'10','spades'),(24,'J','spades'),(25,'Q','spades'),(26,'K','spades'),(27,'A','diamonds'),(28,'2','diamonds'),(29,'3','diamonds'),(30,'4','diamonds'),(31,'5','diamonds'),(32,'6','diamonds'),(33,'7','diamonds'),(34,'8','diamonds'),(35,'9','diamonds'),(36,'10','diamonds'),(37,'J','diamonds'),(38,'Q','diamonds'),(39,'K','diamonds'),(40,'A','clubs'),(41,'2','clubs'),(42,'3','clubs'),(43,'4','clubs'),(44,'5','clubs'),(45,'6','clubs'),(46,'7','clubs'),(47,'8','clubs'),(48,'9','clubs'),(49,'10','clubs'),(50,'J','clubs'),(51,'Q','clubs'),(52,'K','clubs'),(53,'joker','red'),(54,'joker','black');
+INSERT INTO `cards` VALUES (0,NULL,NULL),(1,'A','hearts'),(2,'2','hearts'),(3,'3','hearts'),(4,'4','hearts'),(5,'5','hearts'),(6,'6','hearts'),(7,'7','hearts'),(8,'8','hearts'),(9,'9','hearts'),(10,'10','hearts'),(11,'J','hearts'),(12,'Q','hearts'),(13,'K','hearts'),(14,'A','clubs'),(15,'2','clubs'),(17,'4','clubs'),(18,'5','clubs'),(19,'6','clubs'),(20,'7','clubs'),(21,'8','clubs'),(22,'9','clubs'),(23,'10','clubs'),(24,'J','clubs'),(25,'Q','clubs'),(26,'K','clubs'),(27,'A','diamonds'),(28,'2','diamonds'),(29,'3','diamonds'),(30,'4','diamonds'),(31,'5','diamonds'),(32,'6','diamonds'),(33,'7','diamonds'),(34,'8','diamonds'),(35,'9','diamonds'),(36,'10','diamonds'),(37,'J','diamonds'),(38,'Q','diamonds'),(39,'K','diamonds'),(40,'A','spades'),(41,'2','spades'),(42,'3','spades'),(43,'4','spades'),(44,'5','spades'),(45,'6','spades'),(46,'7','spades'),(47,'8','spades'),(48,'9','spades'),(49,'10','spades'),(50,'J','spades'),(51,'Q','spades'),(52,'K','spades'),(53,'joker','red'),(54,NULL,NULL);
 /*!40000 ALTER TABLE `cards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,11 +97,11 @@ DROP TABLE IF EXISTS `player1_cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player1_cards` (
-  `ID` int(11) DEFAULT NULL,
+  `PLAYER1_CARDS_ID` int(11) DEFAULT NULL,
   `card_text` varchar(50) DEFAULT NULL,
   `card_symbol` varchar(50) DEFAULT NULL,
-  KEY `ID` (`ID`) USING BTREE,
-  CONSTRAINT `ID` FOREIGN KEY (`ID`) REFERENCES `cards` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `PLAYER1_CARDS_ID` (`PLAYER1_CARDS_ID`) USING BTREE,
+  CONSTRAINT `FK_PLAYER1_CARDS_ID` FOREIGN KEY (`PLAYER1_CARDS_ID`) REFERENCES `cards` (`CARDS_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -122,11 +122,11 @@ DROP TABLE IF EXISTS `player2_cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player2_cards` (
-  `ID` int(11) DEFAULT NULL,
+  `PLAYER2_CARDS_ID` int(11) DEFAULT NULL,
   `card_text` varchar(50) DEFAULT NULL,
   `card_symbol` varchar(50) DEFAULT NULL,
-  KEY `FK_PLAYER2_CARDS_CARDS` (`ID`) USING BTREE,
-  CONSTRAINT `FK_PLAYER2_CARDS_CARDS` FOREIGN KEY (`ID`) REFERENCES `cards` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `PLAYER2_CARDS_ID` (`PLAYER2_CARDS_ID`) USING BTREE,
+  CONSTRAINT `FK_PLAYER2_CARDS_ID` FOREIGN KEY (`PLAYER2_CARDS_ID`) REFERENCES `cards` (`CARDS_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,10 +147,10 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `ID` varchar(8) NOT NULL,
+  `USER_ID` varchar(8) NOT NULL,
   `username` varchar(8) DEFAULT NULL,
   `password` varchar(16) DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE
+  PRIMARY KEY (`USER_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -178,11 +178,12 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dealcards`()
 BEGIN
+
 INSERT INTO PLAYER1_CARDS
 SELECT * FROM CARDS ORDER BY RAND()
 LIMIT 27;
 INSERT INTO PLAYER2_CARDS
-SELECT * FROM CARDS C WHERE  C.ID  NOT IN (SELECT C1.ID FROM PLAYER1_CARDS C1);
+SELECT * FROM CARDS C WHERE  C.CARDS_ID  NOT IN (SELECT C1.PLAYER1_CARDS_ID FROM PLAYER1_CARDS C1);
 
 	END ;;
 DELIMITER ;
@@ -245,8 +246,10 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `roundwin_P1`()
 BEGIN
-INSERT INTO PLAYER2_CARDS
-SELECT * FROM BOARD; 
+
+INSERT INTO PLAYER2_CARDS(PLAYER2_CARDS_ID,card_text,card_symbol)
+SELECT (BOARD_CARDS_ID,card_text,card_symbol) FROM BOARD; 
+DELETE FROM BOARD;
 
 	END ;;
 DELIMITER ;
@@ -267,8 +270,8 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `roundwin_P2`()
 BEGIN
 
-INSERT INTO PLAYER1_CARDS
-SELECT * FROM BOARD; 
+INSERT INTO PLAYER1_CARDS(PLAYER1_CARDS_ID,card_text,card_symbol)
+SELECT (BOARD_CARDS_ID,card_text,card_symbol) FROM BOARD; 
 DELETE FROM BOARD;
 
 	END ;;
@@ -287,4 +290,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-26 16:18:33
+-- Dump completed on 2022-10-26 17:19:33
