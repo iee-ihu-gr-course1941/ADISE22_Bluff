@@ -7,5 +7,5 @@ $st = $mysqli->prepare($sql);
 $st->execute();
 $res= $st->get_result();
 $r = $res->fetch_assoc();
-print "CARD_ID: $r[CARDS_ID], card_text: $r[card_text], card_symbol: $r[card_symbol]";
+print "CARD_ID: $r[ID], card_text: $r[card_text], card_symbol: $r[card_symbol]";
 ?>
