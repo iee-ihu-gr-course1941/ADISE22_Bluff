@@ -1,7 +1,7 @@
 
 window.onload = function() {
     buildDeck();
-    fill_board();
+    
 
 }
 

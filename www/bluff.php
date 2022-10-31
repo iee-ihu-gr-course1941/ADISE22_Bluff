@@ -19,7 +19,7 @@ switch ($r=array_shift($request)) {
     case 'player1_cards': show_p1($method);                        
     case 'player2_cards': show_p2($method);
     case 'new_game': new_game($method);        
-    default: header("HTTP/1.1 404 Not Found");
+    
     exit;
 }
 function show_p1($method)
@@ -60,12 +60,12 @@ function new_game($method)
 }
 function deal_cards($method) 
 {
-    if($method=='GET')
+    if($method=='POST')
     {
         global $mysqli;
         $sql='call dealcards()';
-        $mysqli->query($sql);
-    }
+        $mysqli->query($sql);           
+    
 }
-
+}
 ?>
