@@ -16,18 +16,11 @@ switch($r=array_shift($request)) {
 		break;
 		case 'player1':player1_cards($method);
 		break;
+		case 'player1_plays':player1_plays($method,$text,$symbol);
 		default:header("HTTP/1.1 404 Not Found");
 		break;
 	}
-
-	case 'newgame';
-	switch($b=array_shift($request)){
-		case '':
-		case null:newgame($method);
-		break;
-		default:header("HTTP/1.1 404 Not Found");
-		break;
-	}	
+	
 	break;
 	default:
 	header("HTTP/1.1 404 Not Found");
@@ -56,11 +49,12 @@ function player1_cards($method){
 		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
 	}
 }
-function newgame($method){
+function player1_plays($method,$text,$symbol){
 	if($method=='POST'){
-		global $mysqli;
-		$sql='call newgame()';
-		$mysqli->query($sql);
+			global $mysqli;
+			$sql='call player1_plays("$text","symbol")';
+			$mysqli->query($sql);		
 	}
 }
+
 ?>
