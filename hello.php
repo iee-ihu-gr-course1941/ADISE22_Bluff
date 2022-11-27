@@ -7,6 +7,8 @@ else {
 	$mysqli=new mysqli('localhost','root',null,'bluff');
 	echo "localhost side";
 }
+if($mysqli->connect_errno) echo"failed to connect";
+
 $sql='select * from cards';
 echo $sql;
 $st=$mysqli->prepare($sql);
