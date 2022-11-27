@@ -12,7 +12,6 @@ if($mysqli->connect_errno) echo"failed to connect";
 $sql='select * from cards';
 echo $sql;
 $st=$mysqli->prepare($sql);
-echo $st;
 $st->execute();
 $res= $st->get_result();
 $r= $res->fetch_assoc();
