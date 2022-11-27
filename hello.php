@@ -8,6 +8,7 @@ else {
 	echo "localhost side";
 }
 $sql='select * from cards';
+echo $sql;
 $st=$mysqli->prepare($sql);
 $st->execute();
 $res= $st->get_result();
