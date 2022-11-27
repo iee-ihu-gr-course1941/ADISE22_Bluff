@@ -33,8 +33,6 @@ function fill_cards(data){
         option.text = o.card_text+" "+o.card_symbol;
         x.add(option);
 
-        
-
     }
 
 }
