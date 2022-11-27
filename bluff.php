@@ -3,8 +3,11 @@ $user='root';
 $pass='';
 $db='bluff';
 $host='localhost';
+if(gethostname=='users.iee.ihu.gr'){
+$mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2017/it174988/mysql/run/mysql.sock it174988@users.iee.ihu.gr');
+}else{
 $mysqli = new mysqli('localhost',$user,$pass,$db) or die("UNABLE TO CONNECT");
-
+}
 $method= $_SERVER['REQUEST_METHOD'];
 $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
@@ -51,9 +54,9 @@ function player1_cards($method){
 }
 function player1_plays($method,$text,$symbol){
 	if($method=='POST'){
-			global $mysqli;
-			$sql='call player1_plays("$text","symbol")';
-			$mysqli->query($sql);		
+		global $mysqli;
+		$sql='call player1_plays($text,$symbol)';
+		$mysqli->query($sql);		
 	}
 }
 
