@@ -5,8 +5,10 @@ $db='bluff';
 $host='localhost';
 if(gethostname=='users.iee.ihu.gr'){
 $mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2017/it174988/mysql/run/mysql.sock it174988@users.iee.ihu.gr');
+echo 'server side';
 }else{
 $mysqli = new mysqli('localhost',$user,$pass,$db) or die("UNABLE TO CONNECT");
+echo local side';
 }
 $method= $_SERVER['REQUEST_METHOD'];
 $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
