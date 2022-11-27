@@ -7,4 +7,7 @@ else {
 	$mysqli=new mysqli('localhost','root',null,'bluff');
 	echo "localhost side";
 }
+$sql='select * from CARDS';
+$st=$mysqli->prepare($sql);
+$st->execute();
 ?>
