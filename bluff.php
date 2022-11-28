@@ -6,7 +6,7 @@ $host='localhost';
 if(gethostname()=='users.iee.ihu.gr'){
 $mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2017/it174988/mysql/run/mysql.sock');
 }else{
-$mysqli = new mysqli('localhost',$user,$pass,$db) or die("UNABLE TO CONNECT");
+$mysqli = new mysqli('localhost:3307',$user,$pass,$db) or die("UNABLE TO CONNECT");
 }
 $method= $_SERVER['REQUEST_METHOD'];
 $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
