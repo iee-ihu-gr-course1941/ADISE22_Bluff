@@ -19,6 +19,11 @@ switch($r=array_shift($request)) {
 		break;
 	}	
 	break;
+	case 'play_cards':
+		switch($b=array_shift($request)){
+			case 'player1':player1_plays($method);
+			break;
+		}	
 	default:
 	header("HTTP/1.1 404 Not Found");
 	exit;	

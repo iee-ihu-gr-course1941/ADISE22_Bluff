@@ -12,7 +12,7 @@ function draw_selection(){
     t+='</select>';
     t+="<br>";
     t+="<br>";
-    t+="<input type='submit' onclick='show_selected()' value='Play this card'>";
+    t+="<input type='submit' onclick='show_me()' value='Play this card'>";
     t+="</form>";
     $('#select-list').html(t);
 }
@@ -26,6 +26,11 @@ function fill_cards_start(){
     );
 }
 function fill_cards(data){
+    var selectElement=document.getElementById("cards");
+   var i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i);
+   }
     for(var i=0;i<data.length;i++){
         var o=data[i];
         var x = document.getElementById("cards");
