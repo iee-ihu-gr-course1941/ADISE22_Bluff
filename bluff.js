@@ -64,7 +64,7 @@ function login_to_game() {
     //alert(username);
     //alert(number);
 	
-	$.ajax({url: "bluff.php/users/"+playerno, // edw 
+	$.ajax({url: "bluff.php/users/"+number, // edw 
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
@@ -83,5 +83,5 @@ function login_result(data) {
 
 function login_error(data,y,z,c) {
 	var x = data.responseJSON;
-	//alert(x.errormesg);
+	alert(x.errormesg);
 }
