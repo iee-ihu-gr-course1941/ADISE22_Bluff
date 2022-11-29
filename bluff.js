@@ -1,8 +1,11 @@
-
+var me={};
+var game_status={};
 
 $(function(){
     draw_selection();
     fill_cards_start();
+
+    $('#bluff_login').click( login_to_game);
 })
 
 function draw_selection(){
@@ -17,6 +20,7 @@ function draw_selection(){
     $('#select-list').html(t);
 }
 function fill_cards_start(){
+    // var c = (o.piece!=null)?o.piece_color + o.piece:''; // edw
     $.ajax(
         {   
             url:"bluff.php/show_cards/player1",
@@ -48,3 +52,36 @@ function show_me(){
     alert(text);
 }
 
+function login_to_game() {
+	if($('#username').val()=='') {
+		alert('You have to set a username');
+		return;
+	}
+    var username = $('#username').val();
+	var number = $('#playerno').val();
+	//draw_selection(playerno);
+	//fill_cards_start();
+    //alert(username);
+    //alert(number);
+	
+	$.ajax({url: "bluff.php/users/"+playerno, // edw 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {username: $('#username').val(), playerno: number}),
+			success: login_result,
+			error: login_error});
+}
+
+function login_result(data) {
+	me = data[0];
+	$('#game_initializer').hide();
+	// update_info();
+	// game_status_update();
+}
+
+
+function login_error(data,y,z,c) {
+	var x = data.responseJSON;
+	//alert(x.errormesg);
+}

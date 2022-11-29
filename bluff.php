@@ -1,4 +1,7 @@
 <?php
+
+require_once "users.php";
+
 $user='root';
 $pass='';
 $db='bluff';
@@ -13,6 +16,8 @@ $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
 
 switch($r=array_shift($request)) {
+	case 'users': handle_player($method, $request,$input);
+		break;
 	case 'show_cards' :
 	switch($b=array_shift($request)){
 		case 'player1':player1_cards($method);
@@ -41,5 +46,20 @@ function player1_cards($method){
 	}
 }
 
+function handle_player($method, $p,$input) {
+    switch ($b=array_shift($p)) {
+		//	case '':
+		//	case null: if($method=='GET') {show_users($method);}
+		//			   else {header("HTTP/1.1 400 Bad Request"); 
+		//					 print json_encode(['errormesg'=>"Method $method not allowed here."]);}
+		//                break;
+			case 'B': 
+			case 'A': handle_user($method, $b,$input);
+						break;
+			default: header("HTTP/1.1 404 Not Found");
+					 print json_encode(['errormesg'=>"User $b not found."]);
+					 break;
+		}
+}
 
 ?>
