@@ -9,7 +9,7 @@ $host='localhost';
 if(gethostname()=='users.iee.ihu.gr'){
 $mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2017/it174988/mysql/run/mysql.sock');
 }else{
-$mysqli = new mysqli('localhost:3307',$user,$pass,$db) or die("UNABLE TO CONNECT");
+$mysqli = new mysqli('localhost:3309',$user,$pass,$db) or die("UNABLE TO CONNECT");
 }
 $method= $_SERVER['REQUEST_METHOD'];
 $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
@@ -24,11 +24,8 @@ switch($r=array_shift($request)) {
 		break;
 	}	
 	break;
-	case 'play_cards':
-		switch($b=array_shift($request)){
-			case 'player1':player1_plays($method);
-			break;
-		}	
+	case 'play_cards': player1_plays($method,$input);
+		break;
 	default:
 	header("HTTP/1.1 404 Not Found");
 	exit;	
@@ -60,6 +57,20 @@ function handle_player($method, $p,$input) {
 					 print json_encode(['errormesg'=>"User $b not found."]);
 					 break;
 		}
+}
+
+function player1_plays($method,$input) {
+	if($method=='PUT'){
+		$text=$input['text'];
+		$symbol=$input['symbol'];
+
+		global $mysqli;
+		$sql = 'CALL player1_plays(?,?)';
+		// $sql = 'delete from player1_cards where card_text=? and card_symbol=?';
+		$st=$mysqli->prepare($sql);
+		$st->bind_param('ss',$text,$symbol);
+		$st->execute();
+	}
 }
 
 ?>

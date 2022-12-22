@@ -49,7 +49,19 @@ function show_me(){
     var e = document.getElementById("cards");
     var value = e.value;
     var text = e.options[e.selectedIndex].text;
-    alert(text);
+    // alert(text);
+
+    const myArray = text.split(" ");
+    text=myArray[0];
+    let symbol =myArray[1];
+    // alert(text+" and "+symbol);
+
+    $.ajax({url: "bluff.php/play_cards/",
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {text: text, symbol: symbol})
+        });
 }
 
 function login_to_game() {
