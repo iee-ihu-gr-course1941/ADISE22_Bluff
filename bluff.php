@@ -22,9 +22,13 @@ switch($r=array_shift($request)) {
 	switch($b=array_shift($request)){
 		case 'player1':player1_cards($method);
 		break;
+		case 'player2':player2_cards($method);
+		break;
 	}	
 	break;
-	case 'play_cards': player1_plays($method,$input);
+	case 'play_cards1': player1_plays($method,$input);
+		break;
+	case 'play_cards2': player2_plays($method,$input);
 		break;
 	default:
 	header("HTTP/1.1 404 Not Found");
@@ -35,6 +39,18 @@ function player1_cards($method){
 	if($method=='GET'){
 		global $mysqli;
 		$sql='select * from player1_cards';
+		$st=$mysqli->prepare($sql);
+		$st->execute();
+		$res=$st->get_result();
+		header('Content-type: application/json');
+		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+	}
+}
+
+function player2_cards($method){
+	if($method=='GET'){
+		global $mysqli;
+		$sql='select * from player2_cards';
 		$st=$mysqli->prepare($sql);
 		$st->execute();
 		$res=$st->get_result();
@@ -66,6 +82,20 @@ function player1_plays($method,$input) {
 
 		global $mysqli;
 		$sql = 'CALL player1_plays(?,?)';
+		// $sql = 'delete from player1_cards where card_text=? and card_symbol=?';
+		$st=$mysqli->prepare($sql);
+		$st->bind_param('ss',$text,$symbol);
+		$st->execute();
+	}
+}
+
+function player2_plays($method,$input) {
+	if($method=='PUT'){
+		$text=$input['text'];
+		$symbol=$input['symbol'];
+
+		global $mysqli;
+		$sql = 'CALL player2_plays(?,?)';
 		// $sql = 'delete from player1_cards where card_text=? and card_symbol=?';
 		$st=$mysqli->prepare($sql);
 		$st->bind_param('ss',$text,$symbol);

@@ -1,11 +1,14 @@
 var me={};
 var game_status={};
 
+var number = null;
+
 $(function(){
     draw_selection();
     fill_cards_start();
 
     $('#bluff_login').click( login_to_game);
+    $('#bluff_login').click( fill_cards_start);
 })
 
 function draw_selection(){
@@ -21,13 +24,21 @@ function draw_selection(){
 }
 function fill_cards_start(){
     // var c = (o.piece!=null)?o.piece_color + o.piece:''; // edw
-    $.ajax(
-        {   
-            url:"bluff.php/show_cards/player1",
-            success: fill_cards
-        }
+    if (number == "A") {
+        $.ajax(
+            {   
+                url:"bluff.php/show_cards/player1",
+                success: fill_cards
+            }
+    )};
 
-    );
+    if (number == "B") {
+        $.ajax(
+            {   
+                url:"bluff.php/show_cards/player2",
+                success: fill_cards
+            }
+    )};
 }
 function fill_cards(data){
     var selectElement=document.getElementById("cards");
@@ -56,12 +67,24 @@ function show_me(){
     let symbol =myArray[1];
     // alert(text+" and "+symbol);
 
-    $.ajax({url: "bluff.php/play_cards/",
+    if (number == "A") {
+        $.ajax({url: "bluff.php/play_cards1/",
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
 			data: JSON.stringify( {text: text, symbol: symbol})
         });
+    }
+
+    if (number == "B") {
+        $.ajax({url: "bluff.php/play_cards2/",
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {text: text, symbol: symbol})
+        });
+    }
+    fill_cards_start();
 }
 
 function login_to_game() {
@@ -70,7 +93,7 @@ function login_to_game() {
 		return;
 	}
     var username = $('#username').val();
-	var number = $('#playerno').val();
+	number = $('#playerno').val();
 	//draw_selection(playerno);
 	//fill_cards_start();
     //alert(username);
@@ -85,9 +108,13 @@ function login_to_game() {
 			error: login_error});
 }
 
+
+
 function login_result(data) {
 	me = data[0];
 	$('#game_initializer').hide();
+    number = $('#playerno').val();
+    alert(number);
 	// update_info();
 	// game_status_update();
 }
