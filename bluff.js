@@ -6,30 +6,37 @@ var number = null;
 $(function(){
     draw_selection();
     fill_cards_start();
+    
+    number = $('#playerno').val();
 
     $('#bluff_login').click( login_to_game);
     $('#bluff_login').click( fill_cards_start);
+
 })
 
+
+
 function draw_selection(){
-    var t="<form action='#' onsubmit='show_me()' method='POST'>";
+    var t; // ="<form action='#' onsubmit='show_me()' method='POST'>";
     t+="<label for='Your Cards:'>Your Cards:</label>";
     t+="<select id='cards' name='cards' id='cards'>";
     t+='</select>';
     t+="<br>";
     t+="<br>";
-    t+="<input type='submit' onclick='show_me()' value='Play this card'>";
-    t+="</form>";
+    //t+="<input type='submit' onclick='show_me()' value='Play this card'>";
+    t+="<input type='button' onclick='show_me()' value='Play this card'>";
+    //t+="</form>";
     $('#select-list').html(t);
 }
 function fill_cards_start(){
     // var c = (o.piece!=null)?o.piece_color + o.piece:''; // edw
+    
     if (number == "A") {
-        $.ajax(
-            {   
-                url:"bluff.php/show_cards/player1",
-                success: fill_cards
-            }
+    $.ajax(
+        {   
+            url:"bluff.php/show_cards/player1",
+            success: fill_cards
+        }
     )};
 
     if (number == "B") {
@@ -38,7 +45,7 @@ function fill_cards_start(){
                 url:"bluff.php/show_cards/player2",
                 success: fill_cards
             }
-    )};
+        )};
 }
 function fill_cards(data){
     var selectElement=document.getElementById("cards");

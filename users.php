@@ -26,6 +26,7 @@
 		print json_encode(['errormesg'=>"No username given."]);
 		exit;
 	}
+	
 	$username=$input['username'];
 	global $mysqli;
 
