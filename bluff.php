@@ -16,6 +16,8 @@ $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
 
 switch($r=array_shift($request)) {
+	case 'play_cards2': player2_plays($method,$input);
+	break;
 	case 'users': handle_player($method, $request,$input);
 		break;
 	case 'show_cards' :
@@ -28,8 +30,7 @@ switch($r=array_shift($request)) {
 	break;
 	case 'play_cards1': player1_plays($method,$input);
 		break;
-	case 'play_cards2': player2_plays($method,$input);
-		break;
+
 	default:
 	header("HTTP/1.1 404 Not Found");
 	exit;	

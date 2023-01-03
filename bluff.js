@@ -1,11 +1,9 @@
 var me={};
 var game_status={};
-
+var key=0;
 var number = null;
 
 $(function(){
-    draw_selection();
-    fill_cards_start();
     
     number = $('#playerno').val();
 
@@ -17,20 +15,25 @@ $(function(){
 
 
 function draw_selection(){
-    var t; // ="<form action='#' onsubmit='show_me()' method='POST'>";
+    var t=null;
+    if(number=='A'){
+        t="<h3>You are Player 1</h3>";
+    }
+    if(number=='B'){
+        t="<h3>You are Player 2</h3>";
+    }
     t+="<label for='Your Cards:'>Your Cards:</label>";
     t+="<select id='cards' name='cards' id='cards'>";
     t+='</select>';
     t+="<br>";
     t+="<br>";
-    //t+="<input type='submit' onclick='show_me()' value='Play this card'>";
-    t+="<input type='button' onclick='show_me()' value='Play this card'>";
-    //t+="</form>";
+    //<button id='bluff_login' class='btn btn-primary'>Join Game</button><br>
+    t+="<button id='play_card' onclick='show_me()'>Play this card</button>";
     $('#select-list').html(t);
 }
 function fill_cards_start(){
     // var c = (o.piece!=null)?o.piece_color + o.piece:''; // edw
-    
+   
     if (number == "A") {
     $.ajax(
         {   
@@ -48,6 +51,8 @@ function fill_cards_start(){
         )};
 }
 function fill_cards(data){
+    draw_selection();
+    $('#game_initializer').hide();
     var selectElement=document.getElementById("cards");
    var i, L = selectElement.options.length - 1;
    for(i = L; i >= 0; i--) {
@@ -63,17 +68,16 @@ function fill_cards(data){
     }
 
 }
+
 function show_me(){
     var e = document.getElementById("cards");
     var value = e.value;
     var text = e.options[e.selectedIndex].text;
-    // alert(text);
+
 
     const myArray = text.split(" ");
     text=myArray[0];
     let symbol =myArray[1];
-    // alert(text+" and "+symbol);
-
     if (number == "A") {
         $.ajax({url: "bluff.php/play_cards1/",
 			method: 'PUT',
@@ -81,9 +85,7 @@ function show_me(){
 			contentType: 'application/json',
 			data: JSON.stringify( {text: text, symbol: symbol})
         });
-    }
-
-    if (number == "B") {
+    }else {
         $.ajax({url: "bluff.php/play_cards2/",
 			method: 'PUT',
 			dataType: "json",
@@ -91,7 +93,9 @@ function show_me(){
 			data: JSON.stringify( {text: text, symbol: symbol})
         });
     }
+    alert("You just played:"+text+" "+symbol);
     fill_cards_start();
+
 }
 
 function login_to_game() {
@@ -119,9 +123,6 @@ function login_to_game() {
 
 function login_result(data) {
 	me = data[0];
-	$('#game_initializer').hide();
-    number = $('#playerno').val();
-    alert(number);
 	// update_info();
 	// game_status_update();
 }
