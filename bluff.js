@@ -29,6 +29,12 @@ function draw_selection(){
     t+="<br>";
     //<button id='bluff_login' class='btn btn-primary'>Join Game</button><br>
     t+="<button id='play_card' onclick='show_me()'>Play this card</button>";
+    t+="<br>";
+    t+="<br>";
+    t+="<label>Type your last played(times,symbol):  </label>";  
+    t+="<input type='text' placeholder='Example:3,J' name='calls'><br><br>";
+    t+="<button id='call' onclick=''>Make the call</button>";
+
     $('#select-list').html(t);
 }
 function fill_cards_start(){
