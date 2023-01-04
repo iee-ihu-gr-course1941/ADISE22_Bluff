@@ -8,7 +8,7 @@ $(function(){
     number = $('#playerno').val();
 
     $('#bluff_login').click( login_to_game);
-    $('#bluff_login').click( fill_cards_start);
+    // $('#bluff_login').click( fill_cards_start);
 
 })
 
@@ -152,20 +152,23 @@ function login_to_game() {
 		alert('You have to set a username');
 		return;
 	}
-    var username = $('#username').val();
-	number = $('#playerno').val();
-	//draw_selection(playerno);
-	//fill_cards_start();
-    //alert(username);
-    //alert(number);
-	
-	$.ajax({url: "bluff.php/users/"+number, // edw 
-			method: 'PUT',
-			dataType: "json",
-			contentType: 'application/json',
-			data: JSON.stringify( {username: $('#username').val(), playerno: number}),
-			success: login_result,
-			error: login_error});
+    
+    else {
+        var username = $('#username').val();
+        number = $('#playerno').val();
+        //draw_selection(playerno);
+        //fill_cards_start();
+        //alert(username);
+        //alert(number);
+        
+        $.ajax({url: "bluff.php/users/"+number, // edw 
+                method: 'PUT',
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify( {username: $('#username').val(), playerno: number}),
+                success: fill_cards_start,
+                error: login_error});
+    }
 }
 
 
