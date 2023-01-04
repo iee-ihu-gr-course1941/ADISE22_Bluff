@@ -8,7 +8,7 @@ $(function(){
     number = $('#playerno').val();
 
     $('#bluff_login').click( login_to_game);
-    // $('#bluff_login').click( fill_cards_start);
+   // $('#bluff_login').click( fill_cards_start);
 
 })
 
@@ -117,7 +117,7 @@ function fill_cards(data){
     }
     if (i==0){
         $('#select-list').hide();
-
+        alert("YOU WON!!");
     }
 
 }
@@ -158,20 +158,20 @@ function login_to_game() {
 	}
     
     else {
-        var username = $('#username').val();
-        number = $('#playerno').val();
-        //draw_selection(playerno);
-        //fill_cards_start();
-        //alert(username);
-        //alert(number);
-        
-        $.ajax({url: "bluff.php/users/"+number, // edw 
-                method: 'PUT',
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify( {username: $('#username').val(), playerno: number}),
+    var username = $('#username').val();
+	number = $('#playerno').val();
+	//draw_selection(playerno);
+	//fill_cards_start();
+    //alert(username);
+    //alert(number);
+	
+	$.ajax({url: "bluff.php/users/"+number, // edw 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {username: $('#username').val(), playerno: number}),
                 success: fill_cards_start,
-                error: login_error});
+			error: login_error});
     }
 }
 
