@@ -16,6 +16,10 @@ $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
 
 switch($r=array_shift($request)) {
+	case 'show_calls': show_call($method);
+	break;	
+	case 'calls': call_cards($method,$input);
+	break;
 	case 'play_cards2': player2_plays($method,$input);
 	break;
 	case 'users': handle_player($method, $request,$input);
@@ -35,7 +39,32 @@ switch($r=array_shift($request)) {
 	header("HTTP/1.1 404 Not Found");
 	exit;	
 }
+function show_call($method){
+	if($method=='GET'){
+		global $mysqli;
+		$sql = 'SELECT * FROM calls';
+		$st=$mysqli->prepare($sql);
+		$st->execute();
+		$res=$st->get_result();
+		header('Content-type: application/json');
+		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+	}
+}
+function call_cards($method,$input){
 
+	if($method=='PUT'){
+		$total1=$input['total'];
+		$text1=$input['text'];
+		global $mysqli;
+		$sql = 'CALL call_cards(?,?)';
+		$st=$mysqli->prepare($sql);
+		$st->bind_param('ss',$total1,$text1);
+		$st->execute();
+		$res=$st->get_result();
+		header('Content-type: application/json');
+		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+	}
+}
 function player1_cards($method){
 	if($method=='GET'){
 		global $mysqli;

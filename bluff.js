@@ -12,7 +12,20 @@ $(function(){
 
 })
 
+var intervalId = window.setInterval(function(){
 
+$.ajax({url: "bluff.php/show_calls/",
+        method: 'GET',
+        dataType: "json",
+        contentType: 'application/json',
+        success:change_label
+    });  
+function change_label(data){
+    var o=data[0];
+    document.getElementById('my_label').innerHTML=(o.total+","+o.text);
+
+}
+ }, 100);
 
 function draw_selection(){
     var t=null;
@@ -32,10 +45,40 @@ function draw_selection(){
     t+="<br>";
     t+="<br>";
     t+="<label>Type your last played(times,symbol):  </label>";  
-    t+="<input type='text' placeholder='Example:3,J' name='calls'><br><br>";
-    t+="<button id='call' onclick=''>Make the call</button>";
-
+    t+="<input type='text' placeholder='Example:3,J' id='call' name='call'><br><br>";
+    t+="<button  onclick='make_call()'>Make the call</button>";
+    t+="<br>";
+    t+="<br>";
+    t+="<label>Last call was:<label>";
+    t+="<label id='my_label'><label>";
     $('#select-list').html(t);
+}
+function make_call(){
+  var e=null;   
+    e = document.getElementById("call").value;
+    const myArray = e.split(",");
+    let total=myArray[0];
+    let text=myArray[1];
+
+    $.ajax({url: "bluff.php/calls/",
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {total: total, text: text}),
+            
+        });  
+}
+
+$.ajax({url: "bluff.php/show_calls/",
+        method: 'GET',
+        dataType: "json",
+        contentType: 'application/json',
+        success:change_label
+    });  
+function change_label(data){
+    var o=data[0];
+    document.getElementById('my_label').innerHTML=(o.total+","+o.text);
+
 }
 function fill_cards_start(){
     // var c = (o.piece!=null)?o.piece_color + o.piece:''; // edw
