@@ -115,6 +115,10 @@ function fill_cards(data){
         x.add(option);
 
     }
+    if (i==0){
+        $('#select-list').hide();
+
+    }
 
 }
 
