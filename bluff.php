@@ -16,6 +16,10 @@ $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
 
 switch($r=array_shift($request)) {
+	case 'checkturn': check_turn($method);
+	break;
+	case 'checkwin': check_win($method,$input);
+	break;
 	case 'show_calls': show_call($method);
 	break;	
 	case 'calls': call_cards($method,$input);
@@ -39,6 +43,73 @@ switch($r=array_shift($request)) {
 	header("HTTP/1.1 404 Not Found");
 	exit;	
 }
+function check_win($method,$input){
+	if($method=='PUT'){
+		$number=$input['number'];
+
+		global $mysqli;
+		$sql = 'CALL win_check(?)';
+		$st=$mysqli->prepare($sql);
+		$st->bind_param('s',$number);
+		$st->execute();
+		$res=$st->get_result();
+		header('Content-type: application/json');
+		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+	}
+}
+
+function check_turn($method){
+	if($method=='GET'){
+		global $mysqli;
+		$sql='select player_turn from game_status';
+		$st=$mysqli->prepare($sql);
+		$st->execute();
+		$res=$st->get_result();
+		header('Content-type: application/json');
+		print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+	}
+
+
+
+
+		// global $mysqli;
+		// $sql='select player_turn from game_status';
+		// $st=$mysqli->prepare($sql);
+		// $st->execute();
+		// $res=$st->get_result();
+
+		// $result = mysqli_query($conn, "select player_turn from game_status"); //
+
+		// $row = mysqli_fetch_assoc($result);
+		// $json = json_encode($row);
+		// echo $json;
+		// mysqli_close($conn);
+
+		// header('Content-type: application/json');
+		// print json_encode($res->fetch_all(MYSQLI_ASSOC),JSON_PRETTY_PRINT);	
+
+
+
+
+
+
+	// // Execute a SELECT statement to retrieve the value from the database
+	// $result = mysqli_query($conn, "SELECT value FROM table WHERE id = 1");
+
+	// // Fetch the row of data as an associative array
+	// $row = mysqli_fetch_assoc($result);
+
+	// // Encode the array as a JSON object
+	// $json = json_encode($row);
+
+	// // Output the JSON object
+	// echo $json;
+
+	// // Close the connection
+	// mysqli_close($conn);
+	
+}
+
 function show_call($method){
 	if($method=='GET'){
 		global $mysqli;
