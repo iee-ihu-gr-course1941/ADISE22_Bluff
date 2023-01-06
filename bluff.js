@@ -3,9 +3,10 @@ var game_status={};
 var key=0;
 var number = null;
 
-var turn = "A";
+//var turn = "A";
 var plturn = null;
 var bbaa;
+var change_turn;
 
 $(function(){
     
@@ -30,6 +31,23 @@ function change_label(data){
 
 }
  }, 100);
+
+var intervalId2 = window.setInterval(function(){
+    $.ajax(
+        {
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            url:"bluff.php/checkturn/",
+            success:checkTheTurn
+        }
+    )
+    function checkTheTurn(data){
+        var aaaa=data[0];
+        bbaa = aaaa.player_turn;
+        // alert('turncheck: ' + aaaa.player_turn);
+    }
+}, 100);
 
 function draw_selection(){
     var t=null;
@@ -68,9 +86,19 @@ function make_call(){
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
-			data: JSON.stringify( {total: total, text: text}),
+			data: JSON.stringify( {total: total, text: text, change_turn: change_turn}),
             
         });  
+
+        // allazei ti seira
+    // $.ajax({url: "bluff.php/changeturn/",
+    //     method: 'PUT',
+    //     dataType: "json",
+    //     contentType: 'application/json',
+    //     data: JSON.stringify( {change_turn: change_turn})
+            
+    //     });  
+        
 }
 
 $.ajax({url: "bluff.php/show_calls/",
@@ -145,6 +173,17 @@ function fill_cards(data){
 // }
 
 function show_me(){
+    // $.ajax(
+    //     {
+    //         url:"bluff.php/checkturn/",
+    //         success: function(data) {
+    //             var aaaa=data[0];
+    //             bbaa = aaaa.player_turn;
+    //             alert('turncheck: ' + aaaa.player_turn);
+    //         }
+    //     }
+    // )
+
     var e = document.getElementById("cards");
     var value = e.value;
     var text = e.options[e.selectedIndex].text;
@@ -153,16 +192,7 @@ function show_me(){
     text=myArray[0];
     let symbol =myArray[1];
 
-    $.ajax(
-        {
-            url:"bluff.php/checkturn/",
-            success: function(data) {
-                var aaaa=data[0];
-                bbaa = aaaa.player_turn;
-                alert('turncheck: ' + aaaa.player_turn);
-            }
-        }
-    )
+    
 
     if (number == "A" && bbaa == "A") {
         $.ajax({url: "bluff.php/play_cards1/",
@@ -171,7 +201,7 @@ function show_me(){
 			contentType: 'application/json',
 			data: JSON.stringify( {text: text, symbol: symbol})
         });
-        // turn = "B";
+        change_turn = "B";
     }else if (number == "B" && bbaa == "B") {
         $.ajax({url: "bluff.php/play_cards2/",
 			method: 'PUT',
@@ -179,11 +209,25 @@ function show_me(){
 			contentType: 'application/json',
 			data: JSON.stringify( {text: text, symbol: symbol})
         });
-        // turn = "A";
+        change_turn = "A";
     }
 
     alert("You just played:"+text+" "+symbol);
     fill_cards_start();
+
+    // if(bbaa == "A") {
+    //     change_turn = "B";
+    // }else if(bbaa == "B") {
+    //     change_turn = "A";
+    // }
+
+    // $.ajax({url: "bluff.php/changeturn/",
+    //     method: 'PUT',
+    //     dataType: "json",
+    //     contentType: 'application/json',
+    //     data: JSON.stringify( {change_turn: change_turn})
+            
+    //     });  
 
     // let selectElement = document.getElementById("mySelect");
     // let length = selectElement.options.length;
@@ -200,6 +244,7 @@ function show_me(){
     //     });
     // }
 }
+
 
 function login_to_game() {
     var username = $('#username').val();

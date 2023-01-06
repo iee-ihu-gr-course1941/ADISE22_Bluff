@@ -16,6 +16,8 @@ $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
 $input=json_decode(file_get_contents('php://input'),true);
 
 switch($r=array_shift($request)) {
+	case 'changeturn': change_turn($method);
+	break;
 	case 'checkturn': check_turn($method);
 	break;
 	case 'checkwin': check_win($method,$input);
@@ -43,6 +45,19 @@ switch($r=array_shift($request)) {
 	header("HTTP/1.1 404 Not Found");
 	exit;	
 }
+
+// function change_turn($method,$input){
+// 	if($method=='PUT'){
+// 		$turn=$input['change_turn'];
+
+// 		global $mysqli;
+// 		$sql = 'CALL change_the_turn(?)';
+// 		$st=$mysqli->prepare($sql);
+// 		$st->bind_param('s',$turn);
+// 		$st->execute();
+// 	}
+// }
+
 function check_win($method,$input){
 	if($method=='PUT'){
 		$number=$input['number'];
@@ -93,20 +108,20 @@ function check_turn($method){
 
 
 
-	// // Execute a SELECT statement to retrieve the value from the database
-	// $result = mysqli_query($conn, "SELECT value FROM table WHERE id = 1");
+		// // Execute a SELECT statement to retrieve the value from the database
+		// $result = mysqli_query($conn, "SELECT value FROM table WHERE id = 1");
 
-	// // Fetch the row of data as an associative array
-	// $row = mysqli_fetch_assoc($result);
+		// // Fetch the row of data as an associative array
+		// $row = mysqli_fetch_assoc($result);
 
-	// // Encode the array as a JSON object
-	// $json = json_encode($row);
+		// // Encode the array as a JSON object
+		// $json = json_encode($row);
 
-	// // Output the JSON object
-	// echo $json;
+		// // Output the JSON object
+		// echo $json;
 
-	// // Close the connection
-	// mysqli_close($conn);
+		// // Close the connection
+		// mysqli_close($conn);
 	
 }
 
@@ -126,10 +141,12 @@ function call_cards($method,$input){
 	if($method=='PUT'){
 		$total1=$input['total'];
 		$text1=$input['text'];
+		$change_turn=$input['change_turn'];
+
 		global $mysqli;
-		$sql = 'CALL call_cards(?,?)';
+		$sql = 'CALL call_cards(?,?,?)';	// eixe 2 erotimatika, epeidi prostethike to turn
 		$st=$mysqli->prepare($sql);
-		$st->bind_param('ss',$total1,$text1);
+		$st->bind_param('sss',$total1,$text1,$change_turn);
 		$st->execute();
 		$res=$st->get_result();
 		header('Content-type: application/json');
