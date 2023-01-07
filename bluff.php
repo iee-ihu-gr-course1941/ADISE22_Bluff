@@ -7,7 +7,7 @@ $pass='';
 $db='bluff';
 $host='localhost';
 if(gethostname()=='users.iee.ihu.gr'){
-$mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2017/it174988/mysql/run/mysql.sock');
+$mysqli = new mysqli('localhost',$user,$pass,$db,null,'/home/student/it/2018/it185276/mysql/run/mysql.sock');
 }else{
 $mysqli = new mysqli('localhost:3309',$user,$pass,$db) or die("UNABLE TO CONNECT");
 }
