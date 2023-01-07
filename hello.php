@@ -1,6 +1,6 @@
 <?php
 if(gethostname()=='users.iee.ihu.gr') {
-	$mysqli=new mysqli('users','root','','bluff',null,'/home/student/it/2018/it185276/mysql/run/mysql.sock');
+	$mysqli=new mysqli('localhost','root','','bluff',null,'/home/student/it/2018/it185276/mysql/run/mysql.sock');
 	echo "server side";	
 }
 else {
