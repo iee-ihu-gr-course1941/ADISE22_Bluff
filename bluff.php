@@ -15,7 +15,7 @@ $mysqli = new mysqli('localhost:3309',$user,$pass,$db) or die("UNABLE TO CONNECT
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . 
     $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}?>
+}
 
 $method= $_SERVER['REQUEST_METHOD'];
 $request= explode('/',trim($_SERVER['PATH_INFO'],'/'));
