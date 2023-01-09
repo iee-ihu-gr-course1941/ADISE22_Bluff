@@ -2,7 +2,8 @@
 
 require_once "users.php";
 
-$user='root';
+//$user='root';
+$user=$DB_USER;
 $pass='';
 $db='bluff';
 $host='localhost';
